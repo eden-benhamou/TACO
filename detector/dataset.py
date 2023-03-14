@@ -35,7 +35,7 @@ class Taco(utils.Dataset):
         if round != None:
             ann_filepath += "_" + str(round) + "_" + subset + ".json"
         else:
-            ann_filepath += ".json"
+            ann_filepath += "_" + subset + ".json"
 
         assert os.path.isfile(ann_filepath)
 
@@ -44,7 +44,8 @@ class Taco(utils.Dataset):
 
         # Replace dataset original classes before calling the coco Constructor
         # Some classes may be assigned background to remove them from the dataset
-        self.replace_dataset_classes(dataset, class_map)
+        if class_map != None:
+            self.replace_dataset_classes(dataset, class_map)
 
         taco_alla_coco = COCO()
         taco_alla_coco.dataset = dataset
